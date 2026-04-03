@@ -17,7 +17,7 @@ go install ./cmd/xv
 This installs the binary as:
 
 ```bash
-/Users/mrityunjay/go/bin/xv
+~/go/bin/xv
 ```
 
 ## Run
