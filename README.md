@@ -26,12 +26,6 @@ This installs the binary as:
 xv /path/to/file.xer
 ```
 
-Example:
-
-```bash
-xv "/Users/mrityunjay/dev/work/accurise/syncify/tests/data/xer/Northwell Health - Zucker - UPD-10 - Export.xer"
-```
-
 You can also run it without installing:
 
 ```bash
