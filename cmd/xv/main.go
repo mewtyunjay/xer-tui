@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	tea "github.com/charmbracelet/bubbletea"
 
@@ -21,6 +22,8 @@ func main() {
 
 func run(args []string) error {
 	switch len(args) {
+	case 0:
+		return runViewer("")
 	case 1:
 		switch args[0] {
 		case "-h", "--help", "help":
@@ -36,20 +39,30 @@ func run(args []string) error {
 		return runViewer(args[0])
 	default:
 		printUsage()
-		if len(args) == 0 {
-			os.Exit(2)
-		}
-		return nil
+		return fmt.Errorf("expected zero or one argument")
 	}
 }
 
 func runViewer(path string) error {
-	data, err := viewer.LoadFile(path)
+	dir, err := os.Getwd()
 	if err != nil {
 		return err
 	}
 
-	model := viewer.NewModel(data)
+	var data *viewer.FileData
+	if path != "" {
+		path, err = filepath.Abs(path)
+		if err != nil {
+			return err
+		}
+		data, err = viewer.LoadFile(path)
+		if err != nil {
+			return err
+		}
+		dir = filepath.Dir(path)
+	}
+
+	model := viewer.NewModel(data, dir)
 	program := tea.NewProgram(model, tea.WithAltScreen())
 	finalModel, err := program.Run()
 	if err != nil {
@@ -99,7 +112,7 @@ func displayVersion(value string) string {
 }
 
 func printUsage() {
-	fmt.Fprintln(os.Stderr, "usage: xv <file.xer>")
+	fmt.Fprintln(os.Stderr, "usage: xv [file.xer]")
 	fmt.Fprintln(os.Stderr, "       xv update")
 	fmt.Fprintln(os.Stderr, "       xv version")
 }
