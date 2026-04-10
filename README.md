@@ -26,6 +26,12 @@ This installs the binary as:
 xv /path/to/file.xer
 ```
 
+Or start in the current directory and browse for a file:
+
+```bash
+xv
+```
+
 You can also run it without installing:
 
 ```bash
@@ -39,6 +45,12 @@ go run ./cmd/xv /path/to/file.xer
 - `h` / `l`: scroll left and right
 - `pgup` / `pgdn`: page up and down
 - `g` / `G`: jump to top or bottom
+- `/`: search rows
+- `f`: filter rows to matches
+- `t`: filter tables
+- `b`: browse `.xer` files
+- `enter`: open selected file in browser
+- `esc`: clear active filters
 - `?`: toggle help
 - `q`: quit
 
